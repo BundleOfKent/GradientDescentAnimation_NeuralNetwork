@@ -43,9 +43,9 @@ def costs(x,y,w_a,w_b,seed_):
         w2=np.random.randn(10,hidden_1) # weight matrix of output layer
         w2[5][250] = w_a # set value for weight w_250,5(2)
         w2[5][251] = w_b # set value for weight w_251,5(2)
-        a0 = expit(w0 @ x.T)  # output of input layer
-        a1=expit(w1 @ a0)  # output of 1st hidden layer
-        pred= expit(w2 @ a1) # output of 2nd hidden layer
+        a0 = expit(w0 @ x.T)  # output of 1st hidden layer
+        a1=expit(w1 @ a0)  # output of 2nd hidden layer
+        pred= expit(w2 @ a1) # output of final layer
         return np.mean(np.sum((y-pred)**2,axis=0)) # costs w.r.t. w_a and w_b
 
 
@@ -153,7 +153,7 @@ class NeuralNetwork(object):
         a0 = expit(self.w0 @ X.T)  
         a1=expit(self.w1 @ a0)  
         pred= expit(self.w2 @ a1)
-        # Partial derivatives of costs w.r.t. weights of the 2nd hidden layer: 
+        # Partial derivatives of costs w.r.t. weights of the output layer: 
         dw2= (pred - y.T)*pred*(1-pred)  @ a1.T / len(X)   # ... averaged over the sample size
         # Update weights: 
         self.w2[5][250]=self.w2[5][250] - self.lr * dw2[5][250] 
